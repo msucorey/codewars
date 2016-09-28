@@ -11,6 +11,6 @@ def hamming(n)
   numbers.sort[n - 1]
 end
 
-puts hamming(11)
-puts hamming(12)
-puts hamming(13)
+puts hamming(18)
+puts hamming(36)
+puts hamming(72)
