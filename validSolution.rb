@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby
+
+#wait this is a comment
+
 def validSolution(board)
   return false if board.flatten.size != 81
   return false if board.flatten.any? { |el| el.class != Fixnum }

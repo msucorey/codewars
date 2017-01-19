@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+puts "hello"
+
 def score( dice )
   score1 = (dice.count(1) / 3) * 1_000 + (dice.count(1) % 3) * 100
   score2 = (dice.count(2) / 3) *   200
