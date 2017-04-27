@@ -23,8 +23,9 @@ def calc(last, base)
   nil
 end
 
-calc(2,8)
+calc(4,10)
 # "102564"
 calc(4,16)
 # "104"
-calc(4,10)
+calc(2,8)
+# "1042"
