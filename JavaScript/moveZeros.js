@@ -2,7 +2,7 @@ function moveZeros(arr) {
   let result = [];
   let zeros = [];
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == 0) {
+    if (arr[i] === 0) {
       zeros.push(0);
     } else {
       result.push(arr[i]);
