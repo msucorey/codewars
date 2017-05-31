@@ -21,7 +21,7 @@ function numerize(numString) {
 }
 
 function simplify(poly){
-  //your code here
+  let result = "";
   let terms = {};
   let thisTerm = "";
   let thisNum = "";
@@ -58,7 +58,39 @@ function simplify(poly){
   } else {
     terms[thisTerm] = coefficient;
   }
-  console.log(terms);
+  let termsArray = Object.keys(terms);
+  termsArray = termsArray.filter(term => terms[term] !== 0);
+  termsArray = termsArray.sort();
+  termsArray = termsArray.sort((a,b) => {
+    if (a.length < b.length) {
+      return -1;
+    } else if (a.length > b.length) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  coefficient = terms[termsArray[0]];
+  if (coefficient < 0) {
+    result += "-";
+  }
+  if (Math.abs(coefficient) > 1) {
+    result += Math.abs(coefficient).toString();
+  }
+  result += termsArray[0];
+  for (let i = 1; i < termsArray.length; i++) {
+    coefficient = terms[termsArray[i]];
+    if (coefficient > 0) {
+      result += "+";
+    } else {
+      result += "-";
+    }
+    if (Math.abs(coefficient) > 1) {
+      result += Math.abs(coefficient).toString();
+    }
+    result += termsArray[i];
+  }
+  return result;
 }
 
 // test reduction by equivalence
