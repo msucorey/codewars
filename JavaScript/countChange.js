@@ -1,33 +1,35 @@
-var countChange = function(money, coinArray) {
-  // your implementation here
-  if (money === 0) { return; }
-  if (coinArray.size === 1) {
+var countChangeLogic = function(money, coinArray) {
+  if (money === 0) { return [[]]; }
+  if (coinArray.length === 0) { return []; }
+  if (coinArray.length === 1) {
     if (coinArray[0] > money) { return []; }
-    if (coinArray[0] === money) { return [money]; }
-    if (money % coinArray[0] !== 0) { return []; }
+    if (coinArray[0] === money) { return [[money]]; }
+    if (money % coinArray[0] !== 0) {
+      return [];
+    } else {
+      return [new Array(money / coinArray[0]).fill(coinArray[0])];
+    }
   }
   let result = [];
   const coins = coinArray.sort().reverse();
   for (let i = 0; i < coins.length; i++) {
-    let thisChange = money + 0;
-    let thisResult = [];
-    let j = i + 0;
-    while (j < coins.length) {
-      if (thisChange >= coins[j]) {
-        thisResult.push(coins[j]);
-        thisChange = thisChange - coins[j];
-      } else {
-        j++;
-      }
+    let thisCoin = coins[i];
+    if (money >= thisCoin) {
+      countChangeLogic(money - thisCoin, coins.slice(i)).forEach(subResult => {
+        result.push([thisCoin].concat(subResult));
+      });
     }
-    result.push(thisResult);
   }
-  console.log(result);
+  return result;
 };
 
-countChange(4, [1,2]);
+var countChange = function(money, coinArray) {
+  return countChangeLogic(money, coinArray).length;
+};
+
+console.log(countChange(4, [1,2]));
 // , 3, 'Simple case')
-countChange(10, [5,2,3]);
+console.log(countChange(10, [5,2,3]));
 // , 4, 'Another simple case')
-countChange(11, [5,7]);
+console.log(countChange(11, [5,7]));
 // , 0, 'No change')
