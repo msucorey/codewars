@@ -12,7 +12,6 @@ Dictionary.prototype.findMostSimilar = function (term) {
     });
     return hash;
   };
-  debugger
   const termCount = letterCounter(term);
   let minWord = 'debug!';
   let minChanges = 100;
