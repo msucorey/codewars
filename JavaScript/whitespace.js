@@ -5,22 +5,59 @@
 // }
 // solution
 function whitespace(input) {
-  let inputChars = input.slice();
-  var output = '';
-  var stack = [];
-  var heap = {};
-  const stackManipulation = () => {};
+  const inputChars = input.slice();
+  let output = '';
+  let stack = [];
+  const heap = {};
+  let numInput;
+  const readNumber = () => {};
+  const stackManipulation = () => {
+    switch (inputChars.shift()) {
+      case ' ':
+        stack.push(readNumber());
+        break;
+      case '\t':
+        if (inputChars.shift() === ' ') {
+          stack.push(stack[stack.length - 1 - readNumber()]);
+        } else {
+          numInput = readNumber();
+          if ((numInput < 0) || numInput >= stack.length) {
+            stack = [stack.pop()];
+          } else {
+            stack.splice(stack.length - 1 - numInput, numInput);
+          }
+        }
+        break;
+      case '\n':
+        switch (inputChars.shift()) {
+          case ' ':
+            stack.push(stack[stack.length - 1]);
+            break;
+          case '\t':
+            stack.push(stack.splice(stack.splice(stack.length - 2, 1)));
+            break;
+          case '\n':
+            stack.pop();
+            break;
+          default:
+            break;
+        }
+        break;
+      default:
+        break;
+    }
+  };
   const arithmetic = () => {};
   const heapAccess = () => {};
   const inputOutput = () => {};
   const flowControl = () => {};
   while (inputChars.length > 0) {
-    switch (input[0]) {
+    switch (inputChars.shift()) {
       case ' ':
         stackManipulation();
         break;
       case '\t':
-        switch (input[1]) {
+        switch (inputChars.shift()) {
           case ' ':
             arithmetic();
             break;
