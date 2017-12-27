@@ -4,13 +4,22 @@
 //   return null;
 // }
 // solution
-function whitespace(input) {
-  const inputChars = input.slice();
+function whitespace(code, input) {
+  const inputChars = code.split('');
+  const userInput = input.split('');
   let output = '';
   let stack = [];
   const heap = {};
   let numInput;
-  const readNumber = () => {};
+  const readNumber = () => {
+    const sign = inputChars.shift() === '\t' ? -1 : 1;
+    let numString = '';
+    while (inputChars.shift() !== '\n') {
+      const digit = inputChars.shift() === ' ' ? '0' : '1';
+      numString += digit;
+    }
+    return sign * parseInt(numString, 2);
+  };
   const stackManipulation = () => {
     switch (inputChars.shift()) {
       case ' ':
@@ -47,9 +56,58 @@ function whitespace(input) {
         break;
     }
   };
-  const arithmetic = () => {};
+  const arithmetic = () => {
+    let a;
+    switch (inputChars.shift()) {
+      case ' ':
+        switch (inputChars.shift()) {
+          case ' ':
+            stack.push(stack.pop() + stack.pop());
+            break;
+          case '\t':
+            stack.push((-1 * stack.pop()) + stack.pop());
+            break;
+          case '\n':
+            stack.push(stack.pop() * stack.pop());
+            break;
+          default:
+            break;
+        }
+        break;
+      case '\t':
+        switch (inputChars.shift()) {
+          case ' ':
+            a = stack.pop();
+            stack.push(Math.floor(stack.pop() / a));
+            break;
+          case '\t':
+            a = stack.pop();
+            stack.push(stack.pop() % a);
+            break;
+          default:
+            break;
+        }
+        break;
+      default:
+        break;
+    }
+  };
   const heapAccess = () => {};
-  const inputOutput = () => {};
+  const inputOutput = () => {
+    if (inputChars.shift() === ' ') {
+      if (inputChars.shift() === ' ') {
+        output += String.fromCharCode(stack.pop());
+      } else {
+        output += stack.pop();
+      }
+    } else if (inputChars.shift() === ' ') {
+      const charInput = userInput.shift();
+      const address = stack.pop();
+      heap[address] = charInput.charCodeAt(0);
+    } else {
+      heap[stack.pop()] = userInput.shift();
+    }
+  };
   const flowControl = () => {};
   while (inputChars.length > 0) {
     switch (inputChars.shift()) {
@@ -78,6 +136,7 @@ function whitespace(input) {
         break;
     }
   }
+  console.log(output);
   return output;
 }
 
