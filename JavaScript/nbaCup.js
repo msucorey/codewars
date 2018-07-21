@@ -8,12 +8,13 @@ function nbaCup(resultSheet, toFind) {
     elements.forEach((element) => {
       if (!isNaN(element)) {
         if (firstScore) {
-          secondScore = element;
+          secondScore = +element;
         } else {
-          firstScore = element;
+          firstScore = +element;
         }
       }
     });
+    // TODO add floating number recognition for float error
     const firstTeam = gameScore.split(firstScore)[0].trim();
     const secondTeam = gameScore.split(firstScore)[1].split(secondScore)[0].trim();
     [firstTeam, secondTeam].forEach((team) => {
@@ -28,16 +29,38 @@ function nbaCup(resultSheet, toFind) {
         };
       }
     });
-    if (firstScore > secondScore) {
-      if (teamRecords[firstTeam]) {
-        teamRecords[firstTeam].wins += 1;
-        teamRecords[firstTeam].points += firstScore;
+    const addUpTeamPoints = (team, pointsFor, pointsAgainst) => {
+      teamRecords[team].scored += pointsFor;
+      teamRecords[team].conceded += pointsAgainst;
+    };
+    const tallyWinsLosses = (winningTeam, losingTeam, tie = false) => {
+      if (tie) {
+        teamRecords[winningTeam].draws += 1;
+        teamRecords[losingTeam].draws += 1;
+        teamRecords[winningTeam].points += 1;
+        teamRecords[losingTeam].points += 1;
       } else {
-        teamRecords[secondTeam].wins += 1;
-        teamRecords[secondTeam].points += firstScore;
+        teamRecords[winningTeam].wins += 1;
+        teamRecords[winningTeam].points += 3;
+        teamRecords[losingTeam].losses += 1;
       }
+    };
+    addUpTeamPoints(firstTeam, firstScore, secondScore);
+    addUpTeamPoints(secondTeam, secondScore, firstScore);
+    if (firstScore > secondScore) {
+      tallyWinsLosses(firstTeam, secondTeam);
+    } else {
+      tallyWinsLosses(secondTeam, firstTeam, firstScore === secondScore);
     }
   });
+
+  const teamToFind = teamRecords[toFind];
+
+  if (teamToFind) {
+    const { wins, draws, losses, scored, conceded, points } = teamToFind;
+    return `${toFind}:W=${wins};D=${draws};L=${losses};Scored=${scored};Conceded=${conceded};Points=${points}`;
+  }
+  return `${toFind}:This team didn't play!`;
 }
 
 const r1 = 'Los Angeles Clippers 104 Dallas Mavericks 88,New York Knicks 101 Atlanta Hawks 112,Indiana Pacers 103 Memphis Grizzlies 112,'
