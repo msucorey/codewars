@@ -1,6 +1,10 @@
 function nbaCup(resultSheet, toFind) {
+  if (toFind === '') return '';
+
   const gameScores = resultSheet.split(',');
   const teamRecords = {};
+
+  const isFloat = number => number % 1 !== 0;
 
   gameScores.forEach((gameScore) => {
     const elements = gameScore.split(' ');
@@ -14,7 +18,7 @@ function nbaCup(resultSheet, toFind) {
         }
       }
     });
-    // TODO add floating number recognition for float error
+    const scoreError = isFloat(firstScore) || isFloat(secondScore);
     const firstTeam = gameScore.split(firstScore)[0].trim();
     const secondTeam = gameScore.split(firstScore)[1].split(secondScore)[0].trim();
     [firstTeam, secondTeam].forEach((team) => {
@@ -26,6 +30,7 @@ function nbaCup(resultSheet, toFind) {
           scored: 0,
           conceded: 0,
           points: 0,
+          error: (scoreError && gameScore) || null,
         };
       }
     });
@@ -57,6 +62,7 @@ function nbaCup(resultSheet, toFind) {
   const teamToFind = teamRecords[toFind];
 
   if (teamToFind) {
+    if (teamToFind.error) return `Error(float number):${teamToFind.error}`;
     const { wins, draws, losses, scored, conceded, points } = teamToFind;
     return `${toFind}:W=${wins};D=${draws};L=${losses};Scored=${scored};Conceded=${conceded};Points=${points}`;
   }
