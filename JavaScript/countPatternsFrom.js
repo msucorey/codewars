@@ -8,8 +8,31 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
   if (length === 1) return 1;
 
   switch (firstDot) {
-    case 'A':
-      break;
+    case 'A': {
+      const restOfGrid = grid.filter(x => x === 'A');
+      let options = 0;
+      if (restOfGrid.includes('B')) {
+        options += countPatternsFrom('B', length - 1, restOfGrid);
+      } else if (restOfGrid.includes('C')) {
+        options += countPatternsFrom('C', length - 1, restOfGrid);
+      }
+      if (restOfGrid.includes('E')) {
+        options += countPatternsFrom('E', length - 1, restOfGrid);
+      } else if (restOfGrid.includes('I')) {
+        options += countPatternsFrom('I', length - 1, restOfGrid);
+      }
+      if (restOfGrid.includes('D')) {
+        options += countPatternsFrom('D', length - 1, restOfGrid);
+      } else if (restOfGrid.includes('G')) {
+        options += countPatternsFrom('G', length - 1, restOfGrid);
+      }
+      ['F', 'G'].forEach((letter) => {
+        if (restOfGrid.includes(letter)) {
+          options += countPatternsFrom(letter, length - 1, restOfGrid);
+        }
+      });
+      return options;
+    }
     case 'B':
       break;
     case 'C':
@@ -29,6 +52,8 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
     default:
       break;
   }
+
+  return null;
 };
 
 console.log(countPatternsFrom('A', 0)); // , 0);
