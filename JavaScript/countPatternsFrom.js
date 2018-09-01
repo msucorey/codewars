@@ -11,21 +11,14 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
     case 'A': {
       const restOfGrid = grid.filter(x => x === 'A');
       let options = 0;
-      if (restOfGrid.includes('B')) {
-        options += countPatternsFrom('B', length - 1, restOfGrid);
-      } else if (restOfGrid.includes('C')) {
-        options += countPatternsFrom('C', length - 1, restOfGrid);
-      }
-      if (restOfGrid.includes('E')) {
-        options += countPatternsFrom('E', length - 1, restOfGrid);
-      } else if (restOfGrid.includes('I')) {
-        options += countPatternsFrom('I', length - 1, restOfGrid);
-      }
-      if (restOfGrid.includes('D')) {
-        options += countPatternsFrom('D', length - 1, restOfGrid);
-      } else if (restOfGrid.includes('G')) {
-        options += countPatternsFrom('G', length - 1, restOfGrid);
-      }
+      [['B', 'C'], ['E', 'I'], ['D', 'G']].forEach((pairOfBlockingLetters) => {
+        const [firstLetter, blockedLetter] = pairOfBlockingLetters;
+        if (restOfGrid.includes(firstLetter)) {
+          options += countPatternsFrom(firstLetter, length - 1, restOfGrid);
+        } else if (restOfGrid.includes(blockedLetter)) {
+          options += countPatternsFrom(blockedLetter, length - 1, restOfGrid);
+        }
+      });
       ['F', 'G'].forEach((letter) => {
         if (restOfGrid.includes(letter)) {
           options += countPatternsFrom(letter, length - 1, restOfGrid);
