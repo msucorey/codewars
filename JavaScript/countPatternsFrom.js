@@ -2,6 +2,31 @@
 
 const fullGrid = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
+const pairOfBlockingLetters = (letter) => {
+  switch (letter) {
+    case 'A':
+      return [['B', 'C'], ['E', 'I'], ['D', 'G']];
+    case 'B':
+      return [['E', 'H']];
+    case 'C':
+      return [['B', 'A'], ['E', 'G'], ['F', 'I']];
+    case 'D':
+      return [['E', 'F']];
+    case 'E':
+      return [];
+    case 'F':
+      return [['E', 'D']];
+    case 'G':
+      return [['D', 'A'], ['E', 'C'], ['H', 'I']];
+    case 'H':
+      return [['E', 'B']];
+    case 'I':
+      return [['H', 'G'], ['E', 'A'], ['F', 'C']];
+    default:
+      return null;
+  }
+};
+
 /* String, Int ->  Int */
 const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
   if (length < 1 || length > 9) return 0;
@@ -11,8 +36,8 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
     case 'A': {
       const restOfGrid = grid.filter(x => x === 'A');
       let options = 0;
-      [['B', 'C'], ['E', 'I'], ['D', 'G']].forEach((pairOfBlockingLetters) => {
-        const [firstLetter, blockedLetter] = pairOfBlockingLetters;
+      pairOfBlockingLetters('A').forEach((pair) => {
+        const [firstLetter, blockedLetter] = pair;
         if (restOfGrid.includes(firstLetter)) {
           options += countPatternsFrom(firstLetter, length - 1, restOfGrid);
         } else if (restOfGrid.includes(blockedLetter)) {
@@ -43,9 +68,8 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
     case 'I':
       break;
     default:
-      break;
+      return null;
   }
-
   return null;
 };
 
