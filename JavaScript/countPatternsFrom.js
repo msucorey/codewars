@@ -27,6 +27,11 @@ const pairOfBlockingLetters = (letter) => {
   }
 };
 
+const otherLetters = (letter) => {
+  const thisAndBlockers = pairOfBlockingLetters(letter).flat().concat([letter]);
+  return fullGrid.filter(x => !thisAndBlockers.includes(x));
+};
+
 /* String, Int ->  Int */
 const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
   if (length < 1 || length > 9) return 0;
@@ -44,7 +49,7 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
           options += countPatternsFrom(blockedLetter, length - 1, restOfGrid);
         }
       });
-      ['F', 'G'].forEach((letter) => {
+      otherLetters('A').forEach((letter) => {
         if (restOfGrid.includes(letter)) {
           options += countPatternsFrom(letter, length - 1, restOfGrid);
         }
