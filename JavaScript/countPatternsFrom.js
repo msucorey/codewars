@@ -25,8 +25,14 @@ const pairsOfBlockingLetters = (letter) => {
   }
 };
 
+const flatPairs = (pairs) => {
+  const result = [];
+  pairs.forEach(pair => result.concat(pair));
+  return result;
+};
+
 const otherLetters = (letter) => {
-  const thisAndBlockers = pairsOfBlockingLetters(letter).flat().concat([letter]);
+  const thisAndBlockers = flatPairs(pairsOfBlockingLetters(letter)).concat([letter]);
   return fullGrid.filter(x => !thisAndBlockers.includes(x));
 };
 
