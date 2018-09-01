@@ -27,7 +27,10 @@ const pairsOfBlockingLetters = (letter) => {
 
 const flatPairs = (pairs) => {
   const result = [];
-  pairs.forEach(pair => result.concat(pair));
+  pairs.forEach((pair) => {
+    result.push(pair[0]);
+    result.push(pair[1]);
+  });
   return result;
 };
 
@@ -36,12 +39,11 @@ const otherLetters = (letter) => {
   return fullGrid.filter(x => !thisAndBlockers.includes(x));
 };
 
-/* String, Int ->  Int */
 const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
   if (length < 1 || length > 9) return 0;
   if (length === 1) return 1;
 
-  const restOfGrid = grid.filter(x => x === 'A');
+  const restOfGrid = grid.filter(x => x !== firstDot);
   let options = 0;
 
   pairsOfBlockingLetters(firstDot).forEach((pair) => {
@@ -61,11 +63,3 @@ const countPatternsFrom = (firstDot, length, grid = fullGrid) => {
   return options;
 };
 
-console.log(countPatternsFrom('A', 0)); // , 0);
-console.log(countPatternsFrom('A', 10)); // , 0);
-console.log(countPatternsFrom('B', 1)); // , 1);
-console.log(countPatternsFrom('C', 2)); // , 5);
-
-console.log(countPatternsFrom('D', 3)); // , 37);
-console.log(countPatternsFrom('E', 4)); // , 256);
-console.log(countPatternsFrom('E', 8)); // , 23280);
