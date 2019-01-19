@@ -31,11 +31,16 @@ const possibleKnightMoves = startPos => {
   return possibleMoves.filter(isValidMove);
 }
 
-const coordConvert = alphaNum => {
-  const [alpha, num] = alphaNum;
-  const column = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].indexOf(alpha);
-  const row = num - 1;
-  return [column, row];
+const coordConvert = coord => {
+  const columnLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  if (coord instanceof String) {
+    const [alpha, num] = coord;
+    const column = columnLetters.indexOf(alpha);
+    const row = num - 1;
+    return [column, row];
+  }
+  const [x, y] = coord;
+  return columnLetters[x] + (y + 1);
 }
 
 function knight(start, finish) {
@@ -43,4 +48,10 @@ function knight(start, finish) {
   const startSpace = coordConvert(start);
   const finishSpace = coordConvert(finish);
   if (spacesAreAdjacent(startSpace, finishSpace)) return 2;
+  const possibleMoves = possibleKnightMoves(startSpace);
+  const distances = possibleMoves.map(space => distanceBetweenSpaces(space, finishSpace));
+  const minDistance = distances.sort()[0];
+  const minDistIndex = distances.indexOf(minDistance);
+  const nextMove = possibleMoves[minDistIndex];
+  return 1 + knight(coordConvert(start), finish);
 }
