@@ -1,3 +1,13 @@
+const distanceBetweenSpaces = (firstSpace, secondSpace) => {
+  const [x1, y1] = firstSpace;
+  const [x2, y2] = secondSpace;
+  return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+}
+
+const spacesAreEqual = (firstSpace, secondSpace) => {
+  return firstSpace.toString() === secondSpace.toString();
+}
+
 const isValidMove = move => {
   const [x, y] = move;
   return x >= 0 && y >= 0 && x <= 7 && y <= 7;
