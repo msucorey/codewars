@@ -11,7 +11,17 @@ const spacesAreEqual = (firstSpace, secondSpace) => {
 const spacesAreAdjacent = (firstSpace, secondSpace) => {
   const [x1, y1] = firstSpace;
   const [x2, y2] = secondSpace;
-  return Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1;
+  const xDiff = Math.abs(x1 - x2);
+  const yDiff = Math.abs(y1 - y2);
+  return xDiff + yDiff === 1;
+}
+
+const spacesAreCornering = (firstSpace, secondSpace) => {
+  const [x1, y1] = firstSpace;
+  const [x2, y2] = secondSpace;
+  const xDiff = Math.abs(x1 - x2);
+  const yDiff = Math.abs(y1 - y2);
+  return xDiff === 1 && yDiff === 1;
 }
 
 const spacesOut = (firstSpace, secondSpace, number) => {
@@ -27,7 +37,7 @@ const longLeg = (firstSpace, secondSpace) => {
   const [x2, y2] = secondSpace;
   const xDiff = Math.abs(x1 - x2);
   const yDiff = Math.abs(y1 - y2);
-  return (xDiff === 1 && yDiff == 3) || (xDiff === 3 && yDiff ==1);
+  return (xDiff === 1 && yDiff === 3) || (xDiff === 3 && yDiff === 1);
 }
 
 const isValidMove = move => {
@@ -72,16 +82,18 @@ function knight(start, finish) {
   if (spacesAreAdjacent(startSpace, finishSpace)) return 2;
   if (spacesOut(startSpace, finishSpace, 2)) return 2;
   if (longLeg(startSpace, finishSpace)) return 2;
+  if (spacesAreCornering(startSpace, finishSpace)) return 3;
   if (spacesOut(startSpace, finishSpace, 5)) return 3;
   const possibleMoves = possibleKnightMoves(startSpace);
-  console.log('possible moves are ' + possibleMoves);
+  if (possibleMoves.includes(finishSpace)) return 1;
+  // console.log('possible moves are ' + possibleMoves);
   const distances = possibleMoves.map(space => distanceBetweenSpaces(space, finishSpace));
-  console.log('distances are ' + distances);
+  // console.log('distances are ' + distances);
   const minDistance = [...distances].sort((a, b) => a - b)[0];
-  console.log('min distance is ' + minDistance);
+  // console.log('min distance is ' + minDistance);
   const minDistIndex = distances.indexOf(minDistance);
   const nextMove = possibleMoves[minDistIndex];
-  console.log('next move is ' + coordConvert(nextMove));
+  // console.log('next move is ' + coordConvert(nextMove));
   return 1 + knight(coordConvert(nextMove), finish);
 }
 
