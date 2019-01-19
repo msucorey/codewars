@@ -8,6 +8,12 @@ const spacesAreEqual = (firstSpace, secondSpace) => {
   return firstSpace.toString() === secondSpace.toString();
 }
 
+const spacesAreAdjacent = (firstSpace, secondSpace) => {
+  const [x1, y1] = firstSpace;
+  const [x2, y2] = secondSpace;
+  return Math.abs(x1 - x2) === 1 && Math.abs(y1 - y2) === 1;
+}
+
 const isValidMove = move => {
   const [x, y] = move;
   return x >= 0 && y >= 0 && x <= 7 && y <= 7;
@@ -33,6 +39,8 @@ const coordConvert = alphaNum => {
 }
 
 function knight(start, finish) {
-  // Ha-ha, it's not "knight", it's a horse :D
-
+  if (start === finish) return 0;
+  const startSpace = coordConvert(start);
+  const finishSpace = coordConvert(finish);
+  if (spacesAreAdjacent(startSpace, finishSpace)) return 2;
 }
