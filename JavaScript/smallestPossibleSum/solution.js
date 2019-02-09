@@ -1,19 +1,26 @@
 const solution = (numbers) => {
-  let transformationMade = false;
-  let nextNumbers = numbers.sort((x, y) => x - y);
-  nextNumbers = nextNumbers.map((number, index) => {
-    if (number > nextNumbers[index - 1]) {
-      transformationMade = true;
-      return number - nextNumbers[index - 1];
+  let transformationMadeOnLastPass = true;
+  let transformationMadeOnThisPass = false;
+  const numbersCopy = [...numbers];
+  let index = 0;
+  while (transformationMadeOnLastPass) {
+    const [prev, curr, next] =
+      [numbersCopy[index - 1], numbersCopy[index], numbersCopy[index + 1]];
+    if (curr > prev) {
+      numbersCopy[index] -= prev;
+      transformationMadeOnThisPass = true;
+    } else if (curr > next) {
+      numbersCopy[index] -= next;
+      transformationMadeOnThisPass = true;
     }
-    return number;
-  });
-  console.log('next numbers is now');
-  console.log(nextNumbers);
-  if (transformationMade) {
-    return solution(nextNumbers);
+    index += 1;
+    if (index === numbers.length) {
+      index = 0;
+      transformationMadeOnLastPass = transformationMadeOnThisPass;
+      transformationMadeOnThisPass = false;
+    }
   }
-  return nextNumbers.reduce((x, y) => x + y);
+  return numbersCopy.reduce((x, y) => x + y);
 };
 
 module.exports = solution;
