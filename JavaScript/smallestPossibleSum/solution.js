@@ -7,14 +7,15 @@ const solution = (numbers) => {
     const [prev, curr, next] =
       [numbersCopy[index - 1], numbersCopy[index], numbersCopy[index + 1]];
     if (curr > prev) {
-      numbersCopy[index] -= prev;
+      numbersCopy[index] = curr % prev || prev;
       transformationMadeOnThisPass = true;
     } else if (curr > next) {
-      numbersCopy[index] -= next;
+      numbersCopy[index] = curr % next || next;
       transformationMadeOnThisPass = true;
+      index += 1;
     }
     index += 1;
-    if (index === numbers.length) {
+    if (index >= numbers.length) {
       index = 0;
       transformationMadeOnLastPass = transformationMadeOnThisPass;
       transformationMadeOnThisPass = false;
