@@ -7,7 +7,8 @@ class Rational {
   toString() { return `${this.num}/${this.den}`; }
 }
 describe('Basic test cases', () => {
-  [[1, 6, 4, new Rational(3, 6)],
+  [[2, 6, 7],
+    [1, 6, 4, new Rational(3, 6)],
     [1, 20, 20, new Rational(1, 20)],
     [2, 4, 2, 1],
     [2, 4, 9, 0],

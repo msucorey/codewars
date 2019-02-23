@@ -9,8 +9,11 @@ const rollDice = (rolls, sides, threshold) => {
   const numCombinations = Math.pow(sides, rolls);
   let numCombosExceedingThreshold = 0;
   for (let x = 0; x < numCombinations; x += 1) {
-    const dieFaceTotals = x.toString(sides).split()
-      .reduce((a, b) => parseInt(a, sides) + parseInt(b, sides), 0) + rolls;
+    const dieFaceTotals = x.toString(sides).length
+      ? x.toString(sides).split('')
+        .reduce((a, b) => parseInt(a, sides) + parseInt(b, sides), 0) + rolls
+      : x + rolls;
+    console.log(dieFaceTotals);
     if (dieFaceTotals >= threshold) numCombosExceedingThreshold += 1;
   }
   return numCombosExceedingThreshold / numCombinations;
