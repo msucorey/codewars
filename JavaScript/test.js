@@ -1,9 +1,41 @@
 const assert = require('assert');
-const Containers = require('./containers');
+const checkPipe = require('./checkPipe');
+
+let pipe;
 
 describe('Basic test cases', () => {
-  assert.equal(Containers('A'), 1);
-  assert.equal(Containers('CBACBACBACBACBA'), 3);
-  assert.equal(Containers('CCCCBBBBAAAA'), 1);
-  assert.equal(Containers('CODEWARS'), 5);
+  pipe = ['╋━━┓',
+    '┃..┃',
+    '┛..┣'];
+  assert.equal(checkPipe(pipe), true);
+
+  pipe = ['...┏',
+    '┃..┃',
+    '┛..┣'];
+  assert.equal(checkPipe(pipe), false);
+
+  pipe = ['...┏',
+    '...┃',
+    '┛..┣'];
+  assert.equal(checkPipe(pipe), false);
+
+  pipe = [ '...┏',
+    '...┃',
+    '┓..┣'];
+  assert.equal(checkPipe(pipe), true);
+
+  pipe = ['╋',
+    '╋',
+    '╋'];
+  assert.equal(checkPipe(pipe), true);
+
+  pipe = ['╋....',
+    '┃..┛.',
+    '┃....'];
+  assert.equal(checkPipe(pipe), false);
+
+  pipe = ['....',
+    '.┛┛.',
+    '....'];
+  assert.equal(checkPipe(pipe), true);
 });

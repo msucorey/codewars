@@ -1,3 +1,5 @@
+// https://www.codewars.com/kata/containers
+
 const containers = (input) => {
   const stacks = [];
   let loaded;
