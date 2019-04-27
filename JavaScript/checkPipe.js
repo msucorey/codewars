@@ -6,7 +6,6 @@ const pipesConnectingUp = '┗┛┃┣┫┻╋'.split('');
 const pipesConnectingRight = '┗┏━┣┳┻╋'.split('');
 
 const pressurizeFrom = (directions, pipeMap, pressureGrid, row, column) => {
-  console.log(directions, row, column);
   let pressurized = false;
   const directionsToCheck = directions.split(' ');
   const lastRow = pipeMap.length - 1;
@@ -36,9 +35,36 @@ const pressurizeFrom = (directions, pipeMap, pressureGrid, row, column) => {
   return pressurized;
 };
 
-const checkForLeaksOut = (directions, pipeMap, i, j) => {
-  console.log(pipeMap, directions, i, j);
-  return true;
+const checkForLeaksOut = (directions, pipeMap, row, column) => {
+  let leakOut = false;
+  const directionsToCheck = directions.split(' ');
+  const lastRow = pipeMap.length - 1;
+  const lastColumn = pipeMap[0].length - 1;
+  directionsToCheck.forEach((direction) => {
+    switch (direction) {
+      case 'up':
+        if (row !== 0 && !pipesConnectingDown.includes(pipeMap[row - 1][column])) leakOut = true;
+        break;
+      case 'right':
+        if (column !== lastColumn && !pipesConnectingLeft.includes(pipeMap[row][column + 1])) {
+          leakOut = true;
+        }
+        break;
+      case 'down':
+        if (row !== lastRow && !pipesConnectingUp.includes(pipeMap[row + 1][column])) {
+          leakOut = true;
+        }
+        break;
+      case 'left':
+        if (column !== 0 && !pipesConnectingRight.includes(pipeMap[row][column - 1])) {
+          leakOut = true;
+        }
+        break;
+      default:
+        break;
+    }
+  });
+  return leakOut;
 };
 
 const checkPipe = (map) => {
