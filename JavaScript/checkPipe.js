@@ -1,30 +1,61 @@
 // https://www.codewars.com/kata/fix-the-pipes-number-2-is-it-leaking
 
-const pressurizeFrom = (directions, xCoord, yCoord) => {
-  console.log(directions, xCoord, yCoord);
+const pipesConnectingDown = '┓┏┃┣┫┳╋'.split('');
+const pipesConnectingLeft = '┓┛━┫┳┻╋'.split('');
+const pipesConnectingUp = '┗┛┃┣┫┻╋'.split('');
+const pipesConnectingRight = '┗┏━┣┳┻╋'.split('');
+
+const pressurizeFrom = (directions, pipeMap, pressureGrid, row, column) => {
+  console.log(directions, row, column);
+  let pressurized = false;
+  const directionsToCheck = directions.split(' ');
+  const lastRow = pipeMap.length - 1;
+  const lastColumn = pipeMap[0].length - 1;
+  directionsToCheck.forEach((direction) => {
+    switch (direction) {
+      case 'up':
+        if (row === 0 || (pipesConnectingDown.includes(pipeMap[row - 1][column])
+          && pressureGrid[row - 1][column])) pressurized = true;
+        break;
+      case 'right':
+        if (column === lastColumn || (pipesConnectingLeft.includes(pipeMap[row][column + 1])
+          && pressureGrid[row][column + 1])) pressurized = true;
+        break;
+      case 'down':
+        if (row === lastRow || (pipesConnectingUp.includes(pipeMap[row + 1][column])
+          && pressureGrid[row + 1][column])) pressurized = true;
+        break;
+      case 'left':
+        if (column === 0 || (pipesConnectingRight.includes(pipeMap[row][column - 1])
+          && pressureGrid[row][column - 1])) pressurized = true;
+        break;
+      default:
+        break;
+    }
+  });
+  return pressurized;
+};
+
+const checkForLeaksOut = (directions, pipeMap, i, j) => {
+  console.log(pipeMap, directions, i, j);
   return true;
 };
 
-const checkForLeaksOut = (pressureGrid, directions, i, j) => {
-  console.log(pressureGrid, directions, i, j);
-  return true;
-}
-
 const checkPipe = (map) => {
   console.log('map', map);
-  const pressureGrid = [...map];
   let leakFound = false;
-  pressureGrid.map(row => row.split('').map(false));
-  map.forEach((level, i) => {
-    level.split('').forEach((pipeSection, j) => {
-      console.log(level);
+  const pipeMap = map.map(row => row.split(''));
+  const pressureGrid = [...map].map(row => row.split('').map(false));
+  pipeMap.forEach((levelOfPipes, i) => {
+    levelOfPipes.forEach((pipeSection, j) => {
+      console.log(levelOfPipes);
       let pressurized;
       switch (pipeSection) {
-        case '╋':
-          pressurized = pressureGrid[i][j] || pressurizeFrom('up right down left', i, j);
+        case '╋': // TODO pressurize automatically
+          pressurized = pressureGrid[i][j] || pressurizeFrom('up right down left', pressureGrid, i, j);
           if (pressurized) {
             pressureGrid[i][j] = true;
-            if (checkForLeaksOut(pressureGrid, 'up right down left', i, j)) leakFound = true;
+            if (checkForLeaksOut('up right down left', pipeMap, i, j)) leakFound = true;
           }
           console.log(pipeSection);
           break;
