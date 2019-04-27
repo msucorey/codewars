@@ -71,55 +71,95 @@ const checkPipe = (map) => {
   console.log('map', map);
   let leakFound = false;
   const pipeMap = map.map(row => row.split(''));
-  const pressureGrid = [...map].map(row => row.split('').map(false));
-  pipeMap.forEach((levelOfPipes, i) => {
-    levelOfPipes.forEach((pipeSection, j) => {
-      console.log(levelOfPipes);
-      let pressurized;
-      switch (pipeSection) {
-        case '╋': // TODO pressurize automatically
-          pressurized = pressureGrid[i][j] || pressurizeFrom('up right down left', pressureGrid, i, j);
-          if (pressurized) {
-            pressureGrid[i][j] = true;
-            if (checkForLeaksOut('up right down left', pipeMap, i, j)) leakFound = true;
-          }
-          console.log(pipeSection);
-          break;
-        case '┗':
-          console.log(pipeSection);
-          break;
-        case '┓':
-          console.log(pipeSection);
-          break;
-        case '┏':
-          console.log(pipeSection);
-          break;
-        case '┛':
-          console.log(pipeSection);
-          break;
-        case '━':
-          console.log(pipeSection);
-          break;
-        case '┃':
-          console.log(pipeSection);
-          break;
-        case '┣':
-          console.log(pipeSection);
-          break;
-        case '┫':
-          console.log(pipeSection);
-          break;
-        case '┳':
-          console.log(pipeSection);
-          break;
-        case '┻':
-          console.log(pipeSection);
-          break;
-        default:
-          break;
-      }
+  const pressureGrid = [...map].map(row => row.split('').map(() => false));
+  for (let n = 0; n < pipeMap.length; n += 1) {
+    pipeMap.forEach((levelOfPipes, i) => {
+      levelOfPipes.forEach((pipeSection, j) => {
+        let pressurized;
+        switch (pipeSection) {
+          case '╋': // TODO pressurize automatically
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up right down left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up right down left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┗':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up right', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up right', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┓':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('down left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('down left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┏':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('right down', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('right down', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┛':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '━':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('right left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('right left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┃':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up down', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up down', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┣':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up right down', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up right down', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┫':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up down left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up down left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┳':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('right down left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('right down left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          case '┻':
+            pressurized = pressureGrid[i][j] || pressurizeFrom('up right left', pipeMap, pressureGrid, i, j);
+            if (pressurized) {
+              pressureGrid[i][j] = true;
+              if (checkForLeaksOut('up right left', pipeMap, i, j)) leakFound = true;
+            }
+            break;
+          default:
+            break;
+        }
+      });
     });
-  });
+  }
   return !leakFound;
 };
 
