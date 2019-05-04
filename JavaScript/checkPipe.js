@@ -37,7 +37,7 @@ const pressurizeFrom = (directions, pipeMap, pressureGrid, row, column) => {
 
 const memory = {};
 
-const hash = (one, two, three, four) => [one, two, three, four];
+const hash = (...inputs) => [...inputs].map(input => input.toString());
 
 const checkForLeaksOut = (directions, pipeMap, row, column) => {
   let leakOut = false;
