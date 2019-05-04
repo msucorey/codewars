@@ -35,11 +35,20 @@ const pressurizeFrom = (directions, pipeMap, pressureGrid, row, column) => {
   return pressurized;
 };
 
+const memory = {};
+
+const hash = (one, two, three, four) => [one, two, three, four];
+
 const checkForLeaksOut = (directions, pipeMap, row, column) => {
   let leakOut = false;
   const directionsToCheck = directions.split(' ');
   const lastRow = pipeMap.length - 1;
   const lastColumn = pipeMap[0].length - 1;
+  console.log('memory', memory);
+  if (memory[hash(directions, pipeMap, row, column)]) {
+    console.log('we have got this one');
+    return memory[hash(directions, pipeMap, row, column)];
+  }
   directionsToCheck.forEach((direction) => {
     switch (direction) {
       case 'up':
@@ -64,15 +73,16 @@ const checkForLeaksOut = (directions, pipeMap, row, column) => {
         break;
     }
   });
+  memory[hash(directions, pipeMap, row, column)] = leakOut;
   return leakOut;
 };
 
 const checkPipe = (map) => {
-  console.log('map', map);
   let leakFound = false;
   const pipeMap = map.map(row => row.split(''));
   const pressureGrid = [...map].map(row => row.split('').map(() => false));
   for (let n = 0; n < pipeMap.length; n += 1) {
+    /* eslint-disable no-alert, no-loop-func */
     pipeMap.forEach((levelOfPipes, i) => {
       levelOfPipes.forEach((pipeSection, j) => {
         let pressurized;
