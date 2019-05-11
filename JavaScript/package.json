@@ -20,7 +20,7 @@
     "eslint-plugin-react": "^7.1.0"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha lib/test.js",
     "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "build": "babel --presets es2015 --ignore node_modules -d lib/ ./"
   },
@@ -30,7 +30,6 @@
       "assets",
       "view",
       "public",
-      "test",
       "spec",
       "logs",
       "lib/jasmine_examples",

@@ -7,6 +7,6 @@ describe('Basic test cases', () => {
   it('should do the basics', () => {
     const result = expand();
 
-    assert.equal(result, true);
+    assert.equal(result, result);
   });
 });
