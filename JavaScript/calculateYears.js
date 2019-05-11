@@ -1,17 +1,17 @@
 function calculateYears(principal, interest, tax, desired) {
-    // your code
-    var P = principal;
-    var I = interest;
-    var T = tax;
-    var D = desired;
-    var Y = 0;
-    do {
-      if (D == P) {
-        return Y;
-      }
-      P += P * (1 + I) * (1 - T);
-      Y++;
-    } while true;
+  // your code
+  let P = principal;
+  const I = interest;
+  const T = tax;
+  const D = desired;
+  let Y = 0;
+  do {
+    if (D == P) {
+      return Y;
+    }
+    P += P * (1 + I) * (1 - T);
+    Y++;
+  } while (true);
 }
 
 function testing(actual, expected) {

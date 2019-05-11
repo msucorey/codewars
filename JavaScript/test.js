@@ -1,43 +1,12 @@
-const assert = require('assert');
-const checkPipe = require('./checkPipe');
+import { assert } from 'mocha';
 
-let pipe;
+import { expand } from './lib/expand';
+
 
 describe('Basic test cases', () => {
   it('should do the basics', () => {
-    pipe = ['╋━━┓',
-      '┃..┃',
-      '┛..┣'];
-    assert.equal(checkPipe(pipe), true);
+    const result = expand();
 
-    pipe = ['...┏',
-      '┃..┃',
-      '┛..┣'];
-    assert.equal(checkPipe(pipe), false);
-
-    pipe = ['...┏',
-      '...┃',
-      '┛..┣'];
-    assert.equal(checkPipe(pipe), false);
-
-    pipe = ['...┏',
-      '...┃',
-      '┓..┣'];
-    assert.equal(checkPipe(pipe), true);
-
-    pipe = ['╋',
-      '╋',
-      '╋'];
-    assert.equal(checkPipe(pipe), true);
-
-    pipe = ['╋....',
-      '┃..┛.',
-      '┃....'];
-    assert.equal(checkPipe(pipe), false);
-
-    pipe = ['....',
-      '.┛┛.',
-      '....'];
-    assert.equal(checkPipe(pipe), true);
+    assert.equal(result, true);
   });
 });
