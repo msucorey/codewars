@@ -4,16 +4,26 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _passHash = require('./passHash');
+var _findNum = require('./findNum');
+
+var _findNum2 = _interopRequireDefault(_findNum);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var tests = [['password', '5f4dcc3b5aa765d61d8327deb882cf99'], ['abc123', 'e99a18c428cb38d5f260853678922e03']];
-
-describe('passHash function', function () {
-  it('should pass basic test cases', function () {
-    for (var i = 0; i < tests.length; i += 1) {
-      (0, _assert2.default)((0, _passHash.passHash)(tests[i][0]), tests[i][1]);
-    }
+describe('Basic test cases', function () {
+  it('Should compute correct value for 1', function () {
+    (0, _assert2.default)((0, _findNum2.default)(1), 1);
+  });
+  it('Should compute correct value for 5', function () {
+    (0, _assert2.default)((0, _findNum2.default)(5), 5);
+  });
+  it('Should compute correct value for 22', function () {
+    (0, _assert2.default)((0, _findNum2.default)(11), 22);
+  });
+  it('Should compute correct value for 103', function () {
+    (0, _assert2.default)((0, _findNum2.default)(100), 103);
+  });
+  it('Should compute correct value for 476', function () {
+    (0, _assert2.default)((0, _findNum2.default)(500), 476);
   });
 });
