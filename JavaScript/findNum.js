@@ -1,6 +1,6 @@
 // https://www.codewars.com/kata/unique-digit-sequence/train/
 
-const defaultInputArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const noIntersection = (num1, num2) => {
   const num1String = num1.toString();
@@ -10,7 +10,7 @@ const noIntersection = (num1, num2) => {
   return !num1Array.some(el => num2Array.includes(el));
 };
 
-const nextNum = (array) => {
+const pushNextNum = () => {
   const lastNum = array[array.length - 1];
 
   let nextSeqNum = 10;
@@ -22,10 +22,14 @@ const nextNum = (array) => {
       if (noIntersection(lastNum, nextSeqNum)) found = true;
     }
   }
-  return nextSeqNum;
+  array.push(nextSeqNum);
 };
 
-const findNum = (n, array = defaultInputArray) =>
-  array[n] || findNum(n, array.concat(nextNum(array)));
+const findNum = (n) => {
+  while (true) {
+    if (array[n]) return array[n];
+    pushNextNum();
+  }
+};
 
 export default findNum;
