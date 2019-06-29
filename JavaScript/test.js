@@ -1,21 +1,27 @@
 import assert from 'assert';
 
-import findNum from './findNum';
+import connectedValues from './connectedValues';
 
-describe('Basic test cases', () => {
-  it('Should compute correct value for 1', () => {
-    assert(findNum(1), 1);
+describe('connectedValues()', () => {
+  const arr1 = [
+    [0, 0, 0, 1, 3, 4, 0, 3],
+    [0, 2, 0, 0, 2, 0, 0, 5],
+    [0, 0, 0, 2, 0, 1, 1, 1],
+    [2, 3, 4, 1, 3, 1, 0, 0],
+    [0, 1, 5, 1, 6, 0, 2, 0],
+    [2, 0, 2, 3, 1, 1, 1, 1],
+    [2, 0, 2, 3, 1, 1, 1, 1]];
+
+  it('Should return [] when arr at coord != val', () => {
+    assert(connectedValues(arr1, 0, [4, 2]), []);
   });
-  it('Should compute correct value for 5', () => {
-    assert(findNum(5), 5);
+  it('Should return the correct array of coordinates with length == 1', () => {
+    assert(connectedValues(arr1, 2, [1, 1]), [[1, 1]]);
   });
-  it('Should compute correct value for 22', () => {
-    assert(findNum(11), 22);
+  it('Should return the correct array of coordinates with length > 1', () => {
+    const ans1 = [[0, 0], [0, 1], [0, 2], [0, 6], [1, 0],
+      [1, 2], [1, 3], [1, 5], [1, 6], [2, 0],
+      [2, 1], [2, 2], [2, 4]];
+    assert(connectedValues(arr1, 0, [0, 0]).sort(), ans1);
   });
-  it('Should compute correct value for 103', () => {
-    assert(findNum(100), 103);
-  });
-  // it('Should compute correct value for 476', () => {
-  //   assert(findNum(500), 476);
-  // });
 });
