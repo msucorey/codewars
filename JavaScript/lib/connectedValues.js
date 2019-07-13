@@ -85,7 +85,6 @@ var connectedValues = function connectedValues(arr, val, coord) {
   while (newAdjacenciesFound && passes <= maxPasses) {
     newAdjacenciesFound = checkForNewAdjacencies(arr, val);
     passes += 1;
-    console.log('connectedValueCoordinates()', connectedValueCoordinates());
   }
   return connectedValueCoordinates();
 };
