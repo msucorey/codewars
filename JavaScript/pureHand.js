@@ -15,7 +15,8 @@ const isWinningHand = (hand) => {
   });
 
   console.log('first subtract lone clusters', tileCounts);
-  SEQUENCES.forEach((sequence) => {
+  const sequences = hand.includes('789') ? [...SEQUENCES].reverse() : SEQUENCES;
+  sequences.forEach((sequence) => {
     const [first, second, third] = sequence.split('');
     const [firstCount, secondCount, thirdCount] = [tileCounts[first - 1], tileCounts[second - 1], tileCounts[third - 1]];
     if (firstCount === 1 && secondCount === 1 && thirdCount === 1) {
@@ -83,7 +84,7 @@ const solution = (tiles) => {
 
   TILES.forEach((tile) => {
     console.log(`trying ${tile}`);
-    if (isWinningHand(tiles + tile)) winningTiles += tile;
+    if (isWinningHand((tiles + tile.split('').sort().join('')))) winningTiles += tile;
   });
 
   console.log('winningTiles', winningTiles);
