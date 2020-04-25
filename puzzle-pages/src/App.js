@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// TODO install Typescript
+
 const App = () => (
     <div className="app">
       <header className="app__header">
