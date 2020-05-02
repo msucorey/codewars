@@ -1,19 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Home from './pages/Home/Home';
+import About from './pages/About/About';
+import {
+  Switch,
+  Route
+} from "react-router-dom";
 
 // TODO install Typescript
+// TODO install Prettier
 
 const App = () => (
-    <div className="app">
-      <header className="app__header">
-        <img src={logo} className="app__logo" alt="logo" />
-        <h1>Puzzle Pages</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+  <Switch>
+    <Route path="/about">
+      <About />
+    </Route>
+    <Route path="/">
+      <Home />
+    </Route>
+  </Switch>
+);
 
 export default App;

@@ -1,22 +1,22 @@
-// TODO install Sass preprocessor
-// TODO update CSS with Sass
+/* // TODO install Sass preprocessor
+// TODO update CSS with Sass */
 
-.app {
+.home {
   text-align: center;
 }
 
-.app__logo {
+.home__logo {
   height: 40vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .app__logo {
-    animation: app-logo-spin infinite 20s linear;
+  .home__logo {
+    animation: home-logo-spin infinite 20s linear;
   }
 }
 
-.app__header {
+.home__header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -27,11 +27,11 @@
   color: white;
 }
 
-.app__link {
+.home__link {
   color: #61dafb;
 }
 
-@keyframes app-logo-spin {
+@keyframes home-logo-spin {
   from {
     transform: rotate(0deg);
   }
