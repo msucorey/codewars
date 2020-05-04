@@ -7,3 +7,5 @@ const factorial = num => {
 
     return num * factorial(num - 1);
 }
+
+export { factorial };
