@@ -44,7 +44,7 @@ const combatOdds = ({ numAttDice = 2, numDefDice = 1, attBonus = 0, defBonus = 0
   const attOdds = attWinCount / numCases;
   const tieOdds = tieCount / numCases;
   const defOdds = defWinCount / numCases;
-  console.log(attOdds.toFixed(2), tieOdds.toFixed(2), defOdds.toFixed(2));
+  console.log(attOdds.toFixed(2), tieOdds.toFixed(2), defOdds.toFixed(2), `| ${numAttDice}${attBonus ? ' +1 to roll': ' '}${attWinTies ? ' winning ties ' : ' '}vs. ${numDefDice} ${defBonus ? '+1 to roll' : ''}`);
 
 }
 
@@ -54,7 +54,6 @@ for (let numAttDice of [2, 3]) {
     for (let attBonus of [0, 1]) {
       for (let defBonus of [0, 1]) {
         for (let attWinTies of [false, true]) {
-          console.log(`${numAttDice} ${attBonus ? '+1 to roll': ''} ${attWinTies ? 'winning ties' : ''} vs. ${numDefDice} ${defBonus ? '+1 to roll' : ''}`)
           combatOdds({ numAttDice, numDefDice, attBonus, defBonus, attWinTies });
         }
       }
