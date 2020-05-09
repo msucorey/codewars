@@ -25,3 +25,10 @@ Standard combat is resolved as follows:  the Attacker roll 2 dice and keep the h
 ### Weaponry - +1 to die rolls
 
 ## X(T)(P) vs. Y(P)
+
+X 2-3
+Y 1-3
+T 0, 1
+P 0, 1
+P 0, 1
+2 x 3 x 2 x 2 x 2 = 48
