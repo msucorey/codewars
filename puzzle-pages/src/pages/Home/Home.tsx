@@ -3,8 +3,6 @@ import logo from '../../logo.svg';
 import './Home.css';
 import { Link } from 'react-router-dom';
 
-// TODO install Typescript
-
 const Home = () => (
     <div className="home">
       <header className="home__header">

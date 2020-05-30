@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import HistoryOfTheWorld from './pages/HistoryOfTheWorld/HistoryOfTheWorld';
 
-// TODO install Typescript
 // TODO install Prettier
 
 const App = () => (
