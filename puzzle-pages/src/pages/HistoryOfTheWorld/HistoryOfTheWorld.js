@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { factorial } from '../../util/util';
 
 // TODO write test
