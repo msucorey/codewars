@@ -4,7 +4,7 @@ import { withRouter, } from 'react-router-dom';
 type Props = {
   className?: string;
   label?: string;
-  history: any
+  history: any // TODO strengthen type
 };
 
 const BackButton: React.FC<Props> = ({ className = '', label = 'Back', history }) => (

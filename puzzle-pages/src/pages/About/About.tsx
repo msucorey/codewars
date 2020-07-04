@@ -5,11 +5,13 @@ import BackButton from '../../components/BackButton';
 // TODO write test
 
 const About = () => (
-  <>
+  <div className="about">
     <HomeButton />
     <BackButton />
-    <div className="about">{`That's what I'm about.`}</div>
-  </>
+    <p className="about__content">
+      {`That's what I'm about.`}
+    </p>
+  </div>
 );
 
 export default About;
