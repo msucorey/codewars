@@ -6,7 +6,16 @@
 
 // @see https://www.codewars.com/kata/514b92a657cdc65150000006
 
+const isNaturalNumber = anyInput => {
+  if (typeof anyInput !== 'number') return false;
+  if (anyInput as number < 1) return false;
+  if (anyInput as number % 1 !== 0) return false;
+  return true;
+}
+
 const solution = naturalNumber => {
+  if (!isNaturalNumber(naturalNumber)) throw new Error('not a natural number');
+
   let result = 0;
 
   for (let i = 1; i < naturalNumber; i++) {

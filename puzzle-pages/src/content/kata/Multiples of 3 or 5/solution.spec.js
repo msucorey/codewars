@@ -9,10 +9,10 @@ describe('basic tests', () => {
   });
 });
 
-describe('smallest cases', () => {
-  it('should return expected values', () => {
-    [[-1, 0], [0, 0], [1, 0]].map(([input, expected]) => {
-      assert.strictEqual(solution(input), expected);
-    });
+describe('for non-natural numbers', () => {
+  it('should throw', () => {
+    assert.throws(() => solution(0));
+    assert.throws(() => solution('a'));
+    assert.throws(() => solution(0.5));
   });
 });
