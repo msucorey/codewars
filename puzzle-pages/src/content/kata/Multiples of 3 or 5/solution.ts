@@ -9,9 +9,11 @@
 const solution = naturalNumber => {
   let result = 0;
 
-  for (let i = 1; i <= naturalNumber; i++) {
+  for (let i = 1; i < naturalNumber; i++) {
     if ((i % 3 === 0) || (i % 5 === 0)) result += i;
   }
 
   return result;
 }
+
+export { solution };
