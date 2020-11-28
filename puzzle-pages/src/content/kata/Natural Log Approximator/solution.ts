@@ -2,7 +2,7 @@
 
 // @see https://www.codewars.com/kata/59a5a436589d2a3e59000036
 
-function ln(x) {
+function ln(x: any) {
   // Return the natural log of x
 }
 
