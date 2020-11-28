@@ -6,14 +6,14 @@
 
 // @see https://www.codewars.com/kata/514b92a657cdc65150000006
 
-const isNaturalNumber = anyInput => {
+const isNaturalNumber = (anyInput: any) => {
   if (typeof anyInput !== 'number') return false;
   if (anyInput as number < 1) return false;
   if (anyInput as number % 1 !== 0) return false;
   return true;
 }
 
-const solution = naturalNumber => {
+const solution = (naturalNumber: any) => {
   if (!isNaturalNumber(naturalNumber)) throw new Error('not a natural number');
 
   let result = 0;
