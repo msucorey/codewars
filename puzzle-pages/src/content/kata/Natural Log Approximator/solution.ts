@@ -10,7 +10,17 @@ function ln(x: any) {
 
   const e = 2.71828182845904523536028747135266249775724709369995;
 
-  return x;
+  let lowerLimit = 1E-10;
+  let upperLimit = 50;
+
+  while (upperLimit - lowerLimit > 1E-10) {
+    const newLimit = (upperLimit + lowerLimit) / 2;
+
+    if (e ** newLimit > x) upperLimit = newLimit;
+    else lowerLimit = newLimit;
+  };
+
+  return (upperLimit + lowerLimit) /2;
 }
 
 export { ln, withinRange };
