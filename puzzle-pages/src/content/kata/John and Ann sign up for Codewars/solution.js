@@ -22,18 +22,23 @@ Could you write:
  */
 
 
-function john(n) {
-  // your code
+const john = n => {
+  if (n === 0) return 0;
+
+  return n - john(ann(n -1));
 }
-function ann(n) {
+
+const ann = n => {
+  if (n === 0) return 1;
+
+  return n - ann(john(n-1));
+}
+
+const sumJohn = n => {
   // your code
 }
 
-function sumJohn(n) {
-  // your code
-}
-
-function sumAnn(n) {
+const sumAnn = n => {
   // your code
 }
 
