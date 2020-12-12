@@ -35,11 +35,15 @@ const ann = n => {
 }
 
 const sumJohn = n => {
-  // your code
+  if (n === 0) return john(0);
+
+  return john(n) + sumJohn(n - 1);
 }
 
 const sumAnn = n => {
-  // your code
+  if (n === 0) return ann(0);
+
+  return ann(n) + sumAnn(n - 1);
 }
 
 export { john, ann, sumJohn, sumAnn };
