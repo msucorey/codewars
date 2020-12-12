@@ -27,7 +27,7 @@ const annMemo = {};
 const johnDay = n => {
   if (n === 0) return 0;
 
-  if (!johnMemo[n]) johnMemo[n] = n - ann(john(n - 1));
+  if (!johnMemo[n]) johnMemo[n] = n - annDay(johnDay(n - 1));
 
   return johnMemo[n];
 }
@@ -35,7 +35,7 @@ const johnDay = n => {
 const annDay = n => {
   if (n === 0) return 1;
 
-  if (!annMemo[n]) annMemo[n] = n - john(ann(n - 1));
+  if (!annMemo[n]) annMemo[n] = n - johnDay(annDay(n - 1));
 
   return annMemo[n];
 }
@@ -43,7 +43,7 @@ const annDay = n => {
 const ann = n => {
   const result = [];
 
-  for (let i = 0; i <= n; i++) result.push(annDay(i));
+  for (let i = 0; i < n; i++) result.push(annDay(i));
 
   return result;
 }
@@ -51,21 +51,13 @@ const ann = n => {
 const john = n => {
   const result = [];
 
-  for (let i = 0; i <= n; i++) result.push(johnDay(i));
+  for (let i = 0; i < n; i++) result.push(johnDay(i));
 
   return result;
 }
 
-const sumJohn = n => {
-  if (n === 0) return john(0);
+const sumJohn = n => john(n).reduce((accum, next) => accum + next);
 
-  return john(n) + sumJohn(n - 1);
-}
-
-const sumAnn = n => {
-  if (n === 0) return ann(0);
-
-  return ann(n) + sumAnn(n - 1);
-}
+const sumAnn = n => ann(n).reduce((accum, next) => accum + next);
 
 export { john, ann, sumJohn, sumAnn };
