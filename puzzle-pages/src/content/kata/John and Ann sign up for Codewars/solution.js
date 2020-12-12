@@ -21,17 +21,39 @@ Could you write:
 @see https://www.codewars.com/kata/57591ef494aba64d14000526
  */
 
+const johnMemo = {};
+const annMemo = {};
 
-const john = n => {
+const johnDay = n => {
   if (n === 0) return 0;
 
-  return n - john(ann(n -1));
+  if (!johnMemo[n]) johnMemo[n] = n - ann(john(n - 1));
+
+  return johnMemo[n];
+}
+
+const annDay = n => {
+  if (n === 0) return 1;
+
+  if (!annMemo[n]) annMemo[n] = n - john(ann(n - 1));
+
+  return annMemo[n];
 }
 
 const ann = n => {
-  if (n === 0) return 1;
+  const result = [];
 
-  return n - ann(john(n-1));
+  for (let i = 0; i <= n; i++) result.push(annDay(i));
+
+  return result;
+}
+
+const john = n => {
+  const result = [];
+
+  for (let i = 0; i <= n; i++) result.push(johnDay(i));
+
+  return result;
 }
 
 const sumJohn = n => {
