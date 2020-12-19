@@ -46,7 +46,7 @@ const updateBaseValues = (summand, additive = true) => {
   })
 };
 
-const hasRepeatedCahrs = str => new Set(str).size !== str.length;
+const hasRepeatedCahrs = str => !/(.).*\1/.test(str)
 
 const thisWouldCauseLeadingZero = (combo, numUniqueLetters) => {
   const paddedCombo = combo.length < numUniqueLetters ? '0'.concat(combo) : combo;
@@ -55,7 +55,10 @@ const thisWouldCauseLeadingZero = (combo, numUniqueLetters) => {
   return leadingLetters.has(arrayOfLetters[paddedCombo.indexOf('0')]);
 }
 
-const summingFuncGenerator = () => combo => [...combo].reduce(((accum, next, i) => accum + letterMap[arrayOfLetters[i]].baseValue * next), 0);
+const summingFuncGenerator = () => combo => {
+  const letterMultipliers = Object.keys(letterMap).map(key => letterMap[key].baseValue);
+  return [...combo].reduce(((accum, next, i) => accum + letterMultipliers[i] * next), 0)
+}
 
 const alphametics = inputString => {
   let codec;
