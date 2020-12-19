@@ -38,9 +38,10 @@ const initializeLetterMap = string => {
 
 const reverseString = string => string.split('').reverse().join('');
 
-const updateMultipliers = summand => {
+const updateBaseValues = (summand, additive = true) => {
+  const posNegOne = additive ? 1 : -1;
   reverseString(summand).forEach((char, i) => {
-    letterMap[char].baseValue += 10 ** i;
+    letterMap[char].baseValue += additive * 10 ** i;
   })
 };
 
@@ -50,6 +51,7 @@ const alphametics = inputString => {
   const [leftSide, rightSide] = inputString.split('=');
   
   leftSide.trim().split(' + ').forEach(summand => {
-    updateMultipliers(summand);
+    updateBaseValues(summand);
   });
+  updateBaseValues(rightSide.trim(), false);
 };
