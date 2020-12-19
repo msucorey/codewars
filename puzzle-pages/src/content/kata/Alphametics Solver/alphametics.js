@@ -55,6 +55,8 @@ const thisWouldCauseLeadingZero = (combo, numUniqueLetters) => {
   return leadingLetters.has(arrayOfLetters[paddedCombo.indexOf('0')]);
 }
 
+const summingFuncGenerator = () => combo => [...combo].reduce(((accum, next, i) => accum + letterMap[arrayOfLetters[i]].baseValue * next), 0);
+
 const alphametics = inputString => {
   let codec;
   initializeLetterMap(inputString);
@@ -68,18 +70,15 @@ const alphametics = inputString => {
 
   arrayOfLetters = Object.keys(letterMap);
   const numUniqueLetters = arrayOfLetters.length;
-  const searchStart = Number('123456789'.slice(0, numUniqueLetters - 1))
+  const searchStart = Number('123456789'.slice(0, numUniqueLetters - 1));
+  sumFunc = summingFuncGenerator();
 
   for (let x = searchStart; x <= 10 ** numUniqueLetters; x++) {
     thisMapping = String(x);
     if (hasRepeatedCahrs(thisMapping)) continue;
     if (thisWouldCauseLeadingZero(thisMapping, numUniqueLetters)) continue;
-    let thisSum = 0;
 
-    [...thisMapping].forEach((digit, i) => {
-      thisSum += letterMap[arrayOfLetters[i]].baseValue * digit;
-    });
-    if (thisSum === 0) {
+    if (sumFunc(thisMapping) === 0) {
       codec = thisMapping;
       break;
     }
