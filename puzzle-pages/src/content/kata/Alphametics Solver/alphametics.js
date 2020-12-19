@@ -31,51 +31,49 @@ const isUpperAlpha = char => {
 };
 
 const initializeLetterMap = string => {
-  string.forEach(char => {
-    if (isUpperAlpha(char) && !letterMap.char) letterMap.char = newLetterMapValue();
+  [...string].forEach(char => {
+    if (isUpperAlpha(char) && !letterMap.char) letterMap[char] = newLetterMapValue();
   });
 };
 
-const reverseString = string => string.split('').reverse().join('');
-
 const updateBaseValues = (summand, additive = true) => {
   const posNegOne = additive ? 1 : -1;
-  reverseString(summand).forEach((char, i) => {
-    letterMap[char].baseValue += additive * 10 ** i;
+  [...summand].reverse().forEach((char, i) => {
+    letterMap[char].baseValue += posNegOne * 10 ** i;
   })
 };
 
-const hasRepeatedCahrs = str => new Set(str).size === str.length;
+const hasRepeatedCahrs = str => new Set(str).size !== str.length;
 
 const alphametics = inputString => {
-  let answer;
+  let codec;
   initializeLetterMap(inputString);
 
   const [leftSide, rightSide] = inputString.split('=');
   
-  leftSide.trim().split(' + ').forEach(summand => {
+  [...leftSide.trim().split(' + ')].forEach(summand => {
     updateBaseValues(summand);
   });
   updateBaseValues(rightSide.trim(), false);
 
   const arrayOfLetters = Object.keys(letterMap);
   const numUniqueLetters = arrayOfLetters.length;
+  const searchStart = Number('123456789'.slice(0, numUniqueLetters - 1))
 
-  for (let x =1; x <= 10 ** numUniqueLetters; x++) {
+  for (let x = searchStart; x <= 10 ** numUniqueLetters; x++) {
     thisMapping = String(x);
     if (hasRepeatedCahrs(thisMapping)) continue;
     let thisSum = 0;
 
-    thisMapping.forEach((digit, i) => {
+    [...thisMapping].forEach((digit, i) => {
       thisSum += letterMap[arrayOfLetters[i]].baseValue * digit;
     });
     if (thisSum === 0) {
-      answer = thisMapping;
+      codec = thisMapping;
       break;
     }
   }
-
-  console.log('answer', answer)
+  return [...inputString].map(char => isUpperAlpha(char) ? codec[arrayOfLetters.indexOf(char)] : char).join('');
 };
 
-alphametics('ELEVEN + NINE + FIVE + FIVE = THIRTY');
+alphametics('AB + CD = BCE');
