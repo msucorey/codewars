@@ -45,7 +45,10 @@ const updateBaseValues = (summand, additive = true) => {
   })
 };
 
+const hasRepeatedCahrs = str => new Set(str).size === str.length;
+
 const alphametics = inputString => {
+  let answer;
   initializeLetterMap(inputString);
 
   const [leftSide, rightSide] = inputString.split('=');
@@ -54,4 +57,25 @@ const alphametics = inputString => {
     updateBaseValues(summand);
   });
   updateBaseValues(rightSide.trim(), false);
+
+  const arrayOfLetters = Object.keys(letterMap);
+  const numUniqueLetters = arrayOfLetters.length;
+
+  for (let x =1; x <= 10 ** numUniqueLetters; x++) {
+    thisMapping = String(x);
+    if (hasRepeatedCahrs(thisMapping)) continue;
+    let thisSum = 0;
+
+    thisMapping.forEach((digit, i) => {
+      thisSum += letterMap[arrayOfLetters[i]].baseValue * digit;
+    });
+    if (thisSum === 0) {
+      answer = thisMapping;
+      break;
+    }
+  }
+
+  console.log('answer', answer)
 };
+
+alphametics('ELEVEN + NINE + FIVE + FIVE = THIRTY');
