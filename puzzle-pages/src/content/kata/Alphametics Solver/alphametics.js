@@ -23,6 +23,8 @@ const newLetterMapValue = () => ({
 });
 
 const letterMap = {};
+let arrayOfLetters;
+const leadingLetters = new Set();
 
 const isUpperAlpha = char => {
   const code = char.charCodeAt(0);
@@ -37,6 +39,7 @@ const initializeLetterMap = string => {
 };
 
 const updateBaseValues = (summand, additive = true) => {
+  leadingLetters.add(summand[0]);
   const posNegOne = additive ? 1 : -1;
   [...summand].reverse().forEach((char, i) => {
     letterMap[char].baseValue += posNegOne * 10 ** i;
@@ -44,6 +47,13 @@ const updateBaseValues = (summand, additive = true) => {
 };
 
 const hasRepeatedCahrs = str => new Set(str).size !== str.length;
+
+const thisWouldCauseLeadingZero = (combo, numUniqueLetters) => {
+  const paddedCombo = combo.length < numUniqueLetters ? '0'.concat(combo) : combo;
+  if (!paddedCombo.includes('0')) return;
+
+  return leadingLetters.has(arrayOfLetters[paddedCombo.indexOf('0')]);
+}
 
 const alphametics = inputString => {
   let codec;
@@ -56,13 +66,14 @@ const alphametics = inputString => {
   });
   updateBaseValues(rightSide.trim(), false);
 
-  const arrayOfLetters = Object.keys(letterMap);
+  arrayOfLetters = Object.keys(letterMap);
   const numUniqueLetters = arrayOfLetters.length;
   const searchStart = Number('123456789'.slice(0, numUniqueLetters - 1))
 
   for (let x = searchStart; x <= 10 ** numUniqueLetters; x++) {
     thisMapping = String(x);
     if (hasRepeatedCahrs(thisMapping)) continue;
+    if (thisWouldCauseLeadingZero(thisMapping, numUniqueLetters)) continue;
     let thisSum = 0;
 
     [...thisMapping].forEach((digit, i) => {
