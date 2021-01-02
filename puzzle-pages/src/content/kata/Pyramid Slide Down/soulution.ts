@@ -21,20 +21,20 @@ My tests include some extraordinarily high pyramids so as you can guess, brute-f
  */
 
 const longestSlideDown =  (pyramid: Array<Array<number>>) => {
-  if (pyramid.length === 1) return pyramid[0][0];
-  if (pyramid.length === 2) return pyramid[0][0] + Math.max(...pyramid[1]);
+  const topOfPyramid = pyramid[0][0];
+  if (pyramid.length === 1) return topOfPyramid;
+  if (pyramid.length === 2) return topOfPyramid + Math.max(...pyramid[1]);
 
   const leftPyramid = [], rightPyramid = [];
-  for (let x = 1; x < pyramid.length; x ++) {
-    const thisRow = pyramid[x];
+  for (let row = 1; row < pyramid.length; row++) {
+    const thisRow = pyramid[row];
     const firstItem = thisRow.shift();
     const lastItem = thisRow.pop();
     leftPyramid.push([firstItem, ...thisRow]);
     rightPyramid.push([...thisRow, lastItem])
   }
 
-  console.log('pyramid', pyramid);
-  return pyramid[0][0] + Math.max(longestSlideDown(leftPyramid), longestSlideDown(rightPyramid));
+  return topOfPyramid + Math.max(longestSlideDown(leftPyramid), longestSlideDown(rightPyramid));
 }
 
 export { longestSlideDown };
