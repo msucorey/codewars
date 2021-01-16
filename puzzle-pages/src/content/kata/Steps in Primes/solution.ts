@@ -39,36 +39,32 @@ For Go: nil slice is expected when there are no step between m and n. Example: s
 @see https://www.codewars.com/kata/5613d06cee1e7da6d5000055/
  */
 
-let highestKnownPrime = 3;
+let highestSearchedNumber = 3;
 
-const primeNumbers = [2, 3];
+const primeNumbers = new Set([2, 3]);
 
-const isPrime = num => {
-  for(let i = 2; i < num; i++)
-    if(num % i === 0) return false;
-  return true;
+const addIfPrime = num => {
+  for (let i = 2; i <= Math.sqrt(num); i++)
+    if (num % i === 0) return;
+  primeNumbers.add(num);
 }
 
-const searchForKnownPrimesUpTo = num => {
-  for (let i = highestKnownPrime; i <= num; i++) {
-    if (isPrime(i)) {
-      primeNumbers.push(i);
-      highestKnownPrime = i;
-    }
-  }
+const populatePrimesUpTo = (newHigherBound) => {
+  for (let i = highestSearchedNumber + 1; i <= newHigherBound; i++)
+    addIfPrime(i);
+
+  highestSearchedNumber = newHigherBound;
 }
 
 const step = (stepLength, searchStart, searchEnd) => {
-  if (searchEnd > highestKnownPrime) searchForKnownPrimesUpTo(searchEnd);
-
-  for (let i = 0; i < primeNumbers.length; i++) {
-    const thisPrime = primeNumbers[i];
-    if (thisPrime < searchStart) continue;
-    const stepPrime = thisPrime + stepLength;
-
-    if (stepPrime > searchEnd) return null;
-
-    if (primeNumbers.includes(stepPrime)) return [thisPrime, stepPrime];
+  if (searchEnd > highestSearchedNumber) populatePrimesUpTo(searchEnd);
+  
+  let nextPotentialPrime = searchStart;
+  while (nextPotentialPrime + stepLength <= searchEnd) {
+    const stepPrime = nextPotentialPrime + stepLength;
+    if (primeNumbers.has(nextPotentialPrime) && primeNumbers.has(stepPrime))
+      return [nextPotentialPrime, stepPrime];
+    nextPotentialPrime++;
   }
 
   return null;
