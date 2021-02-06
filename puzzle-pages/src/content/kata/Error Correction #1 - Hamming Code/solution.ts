@@ -68,30 +68,29 @@ const encode = (text: string) => {
 }
 
 const decode = (text: string) => {
-  const lengthOfEachGroup = text.length / 3;
-  const binaryTriples = [text.substring(0, lengthOfEachGroup).split(''), text.substring(lengthOfEachGroup, 2 * lengthOfEachGroup).split(''), text.substring(2 * lengthOfEachGroup, 3 * lengthOfEachGroup).split('')];
+  let correctedString = '';
 
-  for (let i = 0; i < lengthOfEachGroup; i++) {
-    let numZeroes: number, numOnes: number;
+  for (let i = 0; i < text.length; i += 3) {
+    let numZeroes = 0;
+    let numOnes = 0;
+    const thisTriple = text.substring(i, i + 3);
     [0, 1, 2].forEach(index => {
-      if (binaryTriples[i][index] === '0') numZeroes++; 
+      if (thisTriple.charAt(index) === '0') numZeroes++; 
       else numOnes++;
     })
     const markItZero = numZeroes > numOnes; // Big Lebowski
-    [0, 1, 2].forEach(index => {
-      if (markItZero) binaryTriples[i][index] = '0';
-      else binaryTriples[i][index] = '0'
-    })
+    correctedString += markItZero ? '0' : '1';
   }
 
-  let binaryStrings = ['', '', ''];
+  const binaryStrings = [];
+  let textIndex = 0;
+  while (textIndex < correctedString.length) {
+    binaryStrings.push(correctedString.substring(textIndex, textIndex + 8));
+    textIndex += 8
+  };
+  console.log(binaryStrings)
 
-  text.split('').forEach((char, index) => {
-    if (index % 3 === 0) binaryStrings[Math.floor(index / lengthOfEachGroup)] += char;
-  });
-
-
-  return binaryStrings.map(string => String.fromCharCode(+string)).join('');
+  return binaryStrings.map(string => String.fromCharCode(parseInt(string, 2))).join('');
 }
 
 export { encode, decode };
