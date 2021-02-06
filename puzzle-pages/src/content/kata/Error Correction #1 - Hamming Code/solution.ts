@@ -48,16 +48,50 @@ input: "100111111000111001000010000111111000000111001111000111110110111000010111
 
 
 const encode = (text: string) => {
+  // e.g. 'hey'
   const asciiValues = [];
 
   for (let i = 0; i < text.length; i++) asciiValues.push(text.charCodeAt(i));
+  // e.g. [104, 101, 121]
 
-  return asciiValues.map(value => Number(value).toString(2)).map(base2string => base2string + base2string + base2string);
+  const binaryTriples = [];
+
+  asciiValues.forEach(asciiValue => {
+    let binaryString = Number(asciiValue).toString(2);
+    while (binaryString.length < 8) binaryString = '0' + binaryString;
+    // e.g. '01101000'
+
+    for (let i = 0; i < binaryString.length; i++) binaryTriples.push(binaryString[i] + binaryString[i] + binaryString[i]);
+  })
+
+  return binaryTriples.join('');
 }
 
 const decode = (text: string) => {
-  console.log('text', text);
-  return null;
+  const lengthOfEachGroup = text.length / 3;
+  const binaryTriples = [text.substring(0, lengthOfEachGroup).split(''), text.substring(lengthOfEachGroup, 2 * lengthOfEachGroup).split(''), text.substring(2 * lengthOfEachGroup, 3 * lengthOfEachGroup).split('')];
+
+  for (let i = 0; i < lengthOfEachGroup; i++) {
+    let numZeroes: number, numOnes: number;
+    [0, 1, 2].forEach(index => {
+      if (binaryTriples[i][index] === '0') numZeroes++; 
+      else numOnes++;
+    })
+    const markItZero = numZeroes > numOnes; // Big Lebowski
+    [0, 1, 2].forEach(index => {
+      if (markItZero) binaryTriples[i][index] = '0';
+      else binaryTriples[i][index] = '0'
+    })
+  }
+
+  let binaryStrings = ['', '', ''];
+
+  text.split('').forEach((char, index) => {
+    if (index % 3 === 0) binaryStrings[Math.floor(index / lengthOfEachGroup)] += char;
+  });
+
+
+  return binaryStrings.map(string => String.fromCharCode(+string)).join('');
 }
 
 export { encode, decode };
