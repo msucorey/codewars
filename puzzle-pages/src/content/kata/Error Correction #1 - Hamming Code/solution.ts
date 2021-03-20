@@ -54,7 +54,7 @@ const encode = (text: string) => {
   for (let i = 0; i < text.length; i++) asciiValues.push(text.charCodeAt(i));
   // e.g. [104, 101, 121]
 
-  const binaryTriples = [];
+  const binaryTriples: string[] = [];
 
   asciiValues.forEach(asciiValue => {
     let binaryString = Number(asciiValue).toString(2);

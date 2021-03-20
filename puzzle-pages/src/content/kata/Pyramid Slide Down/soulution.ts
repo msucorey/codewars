@@ -20,16 +20,16 @@ My tests include some extraordinarily high pyramids so as you can guess, brute-f
 @see https://www.codewars.com/kata/551f23362ff852e2ab000037/
  */
 
-const longestSlideDown =  (pyramid: Array<Array<number>>) => {
+const longestSlideDown: any =  (pyramid: Array<Array<number>>) => {
   const topOfPyramid = pyramid[0][0];
   const pyramidHeight = pyramid.length;
   if (pyramidHeight === 1) return topOfPyramid;
   if (pyramidHeight === 2) return topOfPyramid + Math.max(...pyramid[1]);
 
-  const oldBottomRow = pyramid.pop();
-  const newBottomRow = pyramid.pop().map((element, index) => element + Math.max(oldBottomRow[index], oldBottomRow[index + 1]));
+  const oldBottomRow = pyramid.pop() || [];
+  const newBottomRow = pyramid.pop()?.map((element, index) => element + Math.max(oldBottomRow?.[index], oldBottomRow?.[index + 1]));
 
-  return longestSlideDown(pyramid.concat([newBottomRow]));
+  return longestSlideDown(pyramid.concat([newBottomRow || []]));
 }
 
 export { longestSlideDown };
