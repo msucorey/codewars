@@ -17,10 +17,21 @@ beeramid(5000, 3); // should === 16
 @see https://www.codewars.com/kata/51e04f6b544cf3f6550000c1/
  */
 
+const beeramid = (bonus: number, price: number) => {
+  let allTheBeersIhaveLeft = Math.floor(bonus / price);
+  let currentBeeramidHeight = 0;
+  let thereMayBeEnoughForAnotherLevel = true;
 
-// Returns number of complete beeramid levels
-const beeramid = (bonus, price) => {
-  // heyo
+  while (allTheBeersIhaveLeft && thereMayBeEnoughForAnotherLevel) {
+    const numberOfCansItWouldTakeToBuildTheNextLevel = (currentBeeramidHeight + 1) ** 2;
+
+    if (allTheBeersIhaveLeft >= numberOfCansItWouldTakeToBuildTheNextLevel) {
+      allTheBeersIhaveLeft -= numberOfCansItWouldTakeToBuildTheNextLevel;
+      currentBeeramidHeight++;
+    } else thereMayBeEnoughForAnotherLevel = false;
+  }
+
+  return currentBeeramidHeight;
 }
 
 export { beeramid };
