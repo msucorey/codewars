@@ -11,6 +11,14 @@ balancedParens(3) => ["()()()","(())()","()(())","(()())","((()))"]
  */
 
 const balancedParens = n => {
+  switch (n) {
+    case 0:
+      return [''];
+    case 1:
+      return ['()'];
+    default:
+      break;
+  }
   return [];
 }
 
