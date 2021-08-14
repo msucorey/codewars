@@ -40,7 +40,10 @@ LAST_ACK: RCV_ACK        -> CLOSED
 @see https://www.codewars.com/kata/54acc128329e634e9a000362/
  */
 
-const stateMachine = (state, event) => {
+type State = "CLOSED" | "LISTEN" | "SYN_RCVD" | "SYN_SENT" | "ESTABLISHED" | "CLOSE_WAIT" | "LAST_ACK" | "FIN_WAIT_1" | "FIN_WAIT_2" | "TIME_WAIT" | "CLOSING" | "ERROR";
+type Event = 'APP_PASSIVE_OPEN' | 'APP_ACTIVE_OPEN' | 'APP_SEND' | 'APP_CLOSE' | 'APP_TIMEOUT' | 'RCV_SYN' | 'RCV_ACK' | 'RCV_SYN_ACK' | 'RCV_FIN' | 'RCV_FIN_ACK';
+
+const stateMachine: (state: State, event: Event) => State = (state, event) => {
   switch (state) {
     case 'CLOSED':
       switch (event) {
@@ -143,13 +146,13 @@ const stateMachine = (state, event) => {
 }
 
 
-const traverseTCPStates = eventList => {
-  let state = "CLOSED";
+const traverseTCPStates = (eventList:Array<Event>) => {
+  let state: State = "CLOSED";
   eventList.forEach(event => {
     state = stateMachine(state, event);
     if (state === "ERROR") return "ERROR";
   });
-  return state;
+  return state as State;
 }
 
 export { traverseTCPStates };
