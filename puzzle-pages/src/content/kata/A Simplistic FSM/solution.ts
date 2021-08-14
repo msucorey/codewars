@@ -40,119 +40,140 @@ LAST_ACK: RCV_ACK        -> CLOSED
 @see https://www.codewars.com/kata/54acc128329e634e9a000362/
  */
 
-type State = "CLOSED" | "LISTEN" | "SYN_RCVD" | "SYN_SENT" | "ESTABLISHED" | "CLOSE_WAIT" | "LAST_ACK" | "FIN_WAIT_1" | "FIN_WAIT_2" | "TIME_WAIT" | "CLOSING" | "ERROR";
-type Event = 'APP_PASSIVE_OPEN' | 'APP_ACTIVE_OPEN' | 'APP_SEND' | 'APP_CLOSE' | 'APP_TIMEOUT' | 'RCV_SYN' | 'RCV_ACK' | 'RCV_SYN_ACK' | 'RCV_FIN' | 'RCV_FIN_ACK';
+type State =
+  | "CLOSED"
+  | "LISTEN"
+  | "SYN_RCVD"
+  | "SYN_SENT"
+  | "ESTABLISHED"
+  | "CLOSE_WAIT"
+  | "LAST_ACK"
+  | "FIN_WAIT_1"
+  | "FIN_WAIT_2"
+  | "TIME_WAIT"
+  | "CLOSING"
+  | "ERROR";
+type Event =
+  | "APP_PASSIVE_OPEN"
+  | "APP_ACTIVE_OPEN"
+  | "APP_SEND"
+  | "APP_CLOSE"
+  | "APP_TIMEOUT"
+  | "RCV_SYN"
+  | "RCV_ACK"
+  | "RCV_SYN_ACK"
+  | "RCV_FIN"
+  | "RCV_FIN_ACK";
 
 const stateMachine: (state: State, event: Event) => State = (state, event) => {
   switch (state) {
-    case 'CLOSED':
+    case "CLOSED":
       switch (event) {
-        case 'APP_PASSIVE_OPEN':
-          return 'LISTEN';
-        case 'APP_ACTIVE_OPEN':
-          return 'SYN_SENT';
+        case "APP_PASSIVE_OPEN":
+          return "LISTEN";
+        case "APP_ACTIVE_OPEN":
+          return "SYN_SENT";
         default:
-          return 'ERROR';
+          return "ERROR";
       }
-    case 'LISTEN':
+    case "LISTEN":
       switch (event) {
-        case 'RCV_SYN':
-          return 'SYN_RCVD';
-        case 'APP_SEND':
-          return 'SYN_SENT';
-        case 'APP_CLOSE':
-          return 'CLOSED';
+        case "RCV_SYN":
+          return "SYN_RCVD";
+        case "APP_SEND":
+          return "SYN_SENT";
+        case "APP_CLOSE":
+          return "CLOSED";
         default:
-          return 'ERROR';
-        }
-    case 'SYN_RCVD':
-      switch (event) {
-        case 'APP_CLOSE':
-          return 'FIN_WAIT_1';
-        case 'RCV_ACK':
-          return 'ESTABLISHED';
-        default:
-          return 'ERROR';
+          return "ERROR";
       }
-    case 'SYN_SENT':
+    case "SYN_RCVD":
       switch (event) {
-        case 'RCV_SYN':
-          return 'SYN_RCVD';
-        case 'RCV_SYN_ACK':
-          return 'ESTABLISHED';
-        case 'APP_CLOSE':
-          return 'CLOSED';
+        case "APP_CLOSE":
+          return "FIN_WAIT_1";
+        case "RCV_ACK":
+          return "ESTABLISHED";
         default:
-          return 'ERROR';
+          return "ERROR";
       }
-      case 'ESTABLISHED':
-        switch (event) {
-          case 'APP_CLOSE':
-            return 'FIN_WAIT_1';
-          case 'RCV_FIN':
-            return 'CLOSE_WAIT';
-          default:
-            return 'ERROR';
-        }
-      case 'FIN_WAIT_1':
-        switch (event) {
-          case 'RCV_FIN':
-            return 'CLOSING';
-          case 'RCV_FIN_ACK':
-            return 'TIME_WAIT';
-          case 'RCV_ACK':
-            return 'FIN_WAIT_2';
-          default:
-            return 'ERROR';
-        }
-      case 'CLOSING':
-        switch (event) {
-          case 'RCV_ACK':
-            return 'TIME_WAIT';
-          default:
-            return 'ERROR';
-        }
-      case 'FIN_WAIT_2':
-        switch (event) {
-          case 'RCV_FIN':
-            return 'TIME_WAIT';
-          default:
-            return 'ERROR';
-        }
-      case 'TIME_WAIT':
-        switch (event) {
-          case 'APP_TIMEOUT':
-            return 'CLOSED';
-          default:
-            return 'ERROR';
-        }
-      case 'CLOSE_WAIT':
-        switch (event) {
-          case 'APP_CLOSE':
-            return 'LAST_ACK';
-          default:
-            return 'ERROR';
-        }
-      case 'LAST_ACK':
-        switch (event) {
-          case 'RCV_ACK':
-            return 'CLOSED';
-          default:
-            return 'ERROR';
-        }
-      default:
-        return 'ERROR';
-    }
-}
+    case "SYN_SENT":
+      switch (event) {
+        case "RCV_SYN":
+          return "SYN_RCVD";
+        case "RCV_SYN_ACK":
+          return "ESTABLISHED";
+        case "APP_CLOSE":
+          return "CLOSED";
+        default:
+          return "ERROR";
+      }
+    case "ESTABLISHED":
+      switch (event) {
+        case "APP_CLOSE":
+          return "FIN_WAIT_1";
+        case "RCV_FIN":
+          return "CLOSE_WAIT";
+        default:
+          return "ERROR";
+      }
+    case "FIN_WAIT_1":
+      switch (event) {
+        case "RCV_FIN":
+          return "CLOSING";
+        case "RCV_FIN_ACK":
+          return "TIME_WAIT";
+        case "RCV_ACK":
+          return "FIN_WAIT_2";
+        default:
+          return "ERROR";
+      }
+    case "CLOSING":
+      switch (event) {
+        case "RCV_ACK":
+          return "TIME_WAIT";
+        default:
+          return "ERROR";
+      }
+    case "FIN_WAIT_2":
+      switch (event) {
+        case "RCV_FIN":
+          return "TIME_WAIT";
+        default:
+          return "ERROR";
+      }
+    case "TIME_WAIT":
+      switch (event) {
+        case "APP_TIMEOUT":
+          return "CLOSED";
+        default:
+          return "ERROR";
+      }
+    case "CLOSE_WAIT":
+      switch (event) {
+        case "APP_CLOSE":
+          return "LAST_ACK";
+        default:
+          return "ERROR";
+      }
+    case "LAST_ACK":
+      switch (event) {
+        case "RCV_ACK":
+          return "CLOSED";
+        default:
+          return "ERROR";
+      }
+    default:
+      return "ERROR";
+  }
+};
 
-
-const traverseTCPStates = (eventList:Array<Event>) => {
+const traverseTCPStates = (eventList: Array<Event>) => {
   let state: State = "CLOSED";
-  eventList.forEach(event => {
+  eventList.forEach((event) => {
     state = stateMachine(state, event);
     if (state === "ERROR") return "ERROR";
   });
   return state as State;
-}
+};
 
 export { traverseTCPStates };
