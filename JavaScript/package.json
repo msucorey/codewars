@@ -6,7 +6,7 @@
   "dependencies": {
     "commander": "^2.19.0",
     "eslint": "^4.1.1",
-    "mocha": "^10.2.0",
+    "mocha": "^10.8.2",
     "promptly": "^3.0.3"
   },
   "devDependencies": {
