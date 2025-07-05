@@ -3,3 +3,4 @@ JavaScript/node_modules
 /node_modules
 JavaScript/lib
 *.log
+.DS_Store
